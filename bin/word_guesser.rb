@@ -1,0 +1,62 @@
+#! /usr/bin/env ruby
+
+require 'readline'
+require 'set'
+
+require 'word_guesser'
+
+module WordGuesser
+  module Driver
+    def self.split_letters letters
+      if letters.include? ','
+        letters.split ','
+      elsif letters.include? ' '
+        letters.split ' '
+      else
+        letters.split ''
+      end.map {|letter| letter.strip }
+    end
+
+    def self.run
+      begin
+        word = Readline.readline "Word please: "
+        letters_left = -> do
+          loop do
+            case Readline.readline("Letters left or gone? ")
+            when "l", "left"
+              letters = split_letters Readline.readline("Letters left please: ")
+              return letters.any? ? letters : [*('a'..'z')]
+            when "g", "gone"
+              return [*('a'..'z')] - split_letters(Readline.readline("Letters gone please: "))
+            end
+          end
+        end.call.to_set
+
+        guesser = WordGuesser.new word, letters_left
+
+        puts "Total possible combinations: #{letters_left.size ** word.count('_')}"
+
+        words = guesser.real_combinations
+        puts "Total real words: #{words.size}"
+        puts "Possible real words:"
+        puts words
+        puts
+
+        puts "Frequency of guessed letters:"
+        words.guessed_letter_frequency.sort_by {|l,f| f }.reverse.each do |letter, frequency|
+          puts "#{letter}: #{frequency}"
+        end
+        puts
+      end while -> do
+        loop do
+          case Readline.readline("Again? ")
+          when "y", "yes" then return true
+          when "n", "no" then return false
+          end
+        end
+      end.call
+    end
+  end
+end
+
+WordGuesser::Driver.run
