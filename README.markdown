@@ -6,9 +6,12 @@ This was originally designed as a simple tool to automate the generation of word
 
 - Ruby 1.9.2 or greater
 
-## Usage ##
+## Installation ##
 
     gem install word-guesser
+
+## Usage ##
+
     word-guesser
 
 Then follow the prompts.
