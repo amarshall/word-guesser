@@ -1,4 +1,4 @@
-#! /usr/bin/env ruby
+#!/usr/bin/env ruby
 
 require 'readline'
 require 'set'
@@ -22,7 +22,7 @@ module WordGuesser
         word = Readline.readline "Word please: "
         letters_left = -> do
           loop do
-            case Readline.readline("Letters left or gone? ")
+            case Readline.readline "Letters left or gone? "
             when "l", "left"
               letters = split_letters Readline.readline("Letters left please: ")
               return letters.any? ? letters : [*('a'..'z')]
@@ -49,7 +49,7 @@ module WordGuesser
         puts
       end while -> do
         loop do
-          case Readline.readline("Again? ")
+          case Readline.readline "Again? "
           when "y", "yes" then return true
           when "n", "no" then return false
           end
