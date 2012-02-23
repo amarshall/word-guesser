@@ -34,17 +34,36 @@ module WordGuesser
 
         guesser = WordGuesser.new word, letters_left
 
-        puts "Total possible combinations: #{letters_left.size ** word.count('_')}"
-
-        words = guesser.real_combinations
-        puts "Total real words: #{words.size}"
-        puts "Possible real words:"
-        puts words
-        puts
-
-        puts "Frequency of guessed letters:"
-        words.guessed_letter_frequency.sort_by {|l,f| f }.reverse.each do |letter, frequency|
-          puts "#{letter}: #{frequency}"
+        loop do
+          case Readline.readline "Would you like all combinations or dictionary word combinations? "
+          when "a", "all"
+            total_combinations = letters_left.size ** word.count('_')
+            if total_combinations > 500000
+              next unless -> do
+                loop do
+                  case Readline.readline "There are #{total_combinations.to_s.gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1,")} combinations, this may take a while, are you sure? "
+                  when "y", "yes" then return true
+                  when "n", "no" then return false
+                  end
+                end
+              end.call
+            end
+            puts "total possible combinations: #{letters_left.size ** word.count('_')}"
+            puts "possible combinations:"
+            puts guesser.all_combinations
+            break
+          when "d", "dict", "dictionary"
+            words = guesser.real_combinations
+            puts "total real words: #{words.size}"
+            puts "possible real words:"
+            puts words
+            puts
+            puts "frequency of guessed letters:"
+            words.guessed_letter_frequency.sort_by {|l,f| f }.reverse.each do |letter, frequency|
+              puts "#{letter}: #{frequency}"
+            end
+            break
+          end
         end
         puts
       end while -> do
