@@ -3,11 +3,11 @@ $:.push File.expand_path("../lib", __FILE__)
 require "word_guesser/version"
 
 Gem::Specification.new do |s|
-  s.name        = "word_guesser"
+  s.name        = "word-guesser"
   s.version     = WordGuesser::VERSION
   s.authors     = ["Andrew Marshall"]
   s.email       = ["andrew@johnandrewmarshall.com"]
-  s.homepage    = "http://johnandrewmarshall.com/projects/word_guesser"
+  s.homepage    = "http://johnandrewmarshall.com/projects/word-guesser"
   s.summary     = %q{A word guesser}
   s.description = %q{A simple app to guess possible words given known letters}
 

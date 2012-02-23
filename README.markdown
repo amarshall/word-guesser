@@ -8,8 +8,8 @@ This was originally designed as a simple tool to automate the generation of word
 
 ## Usage ##
 
-    gem install word_guesser
-    word_guesser
+    gem install word-guesser
+    word-guesser
 
 Then follow the prompts.
 
